@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>我们迁移啦~</title>
+    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1"/>
+    <style>
+        html, body{
+            height: 100%;
+        }
+
+        body{
+            color: #333;
+            margin: auto;
+            padding: 1em;
+            display: table;
+            user-select: none;
+            box-sizing: border-box;
+            font: 20px;
+            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+        }
+        a{
+            color: #3498db;
+            text-decoration: none;
+        }
+        h1{
+            margin-top: 0;
+            font-size: 3.5em;
+            line-height: 105%;
+        }
+        main {
+            margin: 0 auto;
+            text-align: center;
+            display: table-cell;
+            vertical-align: middle;
+            line-height: 200%;
+        }
+        .lower {
+            line-height: 80%;
+        }
+        .btn{
+            color: #fff;
+            padding: .85em 1em;
+            background: #3498db;
+            border-radius: 1.5em;
+            display: inline-block;
+            transition: opacity .3s, transform .1s;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <h1 id='migrated'></h1>
+    <span class="lower">
+    <p id='ur-browsing'></p>
+    <p id='new-address'></p>
+    <p id='countdown'> </p>
+    <p><a class="btn" id='go-now'>立即前往</a></p>
+    </span>
+</main>
+
+<script>
+    const url_string = window.location.href;
+    const url = new URL(url_string);
+
+    function getParams(param_name) {
+        return url.searchParams.get(param_name);
+    }
+
+    const https = (getParams("insecure") == 'true') ? 'http://' : 'https://';
+    const siteName = (getParams("name") == null) ? 'XZH的E5续期共享站' : getParams("name");
+    const oldroot = (getParams("oldroot") == null) ? 'e5.xzh.wtf' : getParams("oldroot");
+    const newroot = (getParams("newroot") == null) ? 'e5.xzh.gs' : getParams("newroot");
+    const address = (getParams("location") == null) ? '' : '/' + getParams("location");
+    let timeleft = (getParams("count") == null) ? '50000' : getParams("count");
+
+    document.getElementById('migrated').innerHTML = siteName + '迁移啦~';
+    document.getElementById('ur-browsing').innerHTML = '你正在浏览 - ' + oldroot + address;
+    document.getElementById('new-address').innerHTML = '新的地址是 - ' + '<span style="color:#1976D2;font-weight:500">' + newroot + '</span>' + address + '，请务必记住~';
+    document.getElementById('go-now').setAttribute('href', https + newroot + address);
+    document.getElementById('countdown').setAttribute('style', 'font-size:85%');
+    document.getElementById("countdown").innerHTML = timeleft + " 秒后为你重定向";
+
+    var downloadTimer = setInterval(function(){
+    if(timeleft <= 0){
+    clearInterval(downloadTimer);
+    document.getElementById("countdown").innerHTML = "正在重定向……";
+    window.location.href = (https + newroot + address)
+    } else {
+    document.getElementById("countdown").innerHTML = timeleft - 1 + " 秒后为你重定向";
+    }
+    timeleft -= 1;
+    }, 1000);
+</script>
+<script defer type="module" src="https://cdn.jsdelivr.net/npm/wc-github-corners@latest"></script>
+<github-corners fill="#3498db" position="right" repo="hifocus/Migration-Page" blank></github-corners>
+
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "175424342354445080d432049ad6159a"}'></script><!-- End Cloudflare Web Analytics -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "alvmz9se6p");
+</script>
+
+</body>
+</html>
